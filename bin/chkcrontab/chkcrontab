@@ -1,0 +1,62 @@
+#!/usr/bin/python
+#
+# Copyright 2011 Google Inc. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+"""chkcrontab - Checks the correctness of crontab files.
+
+Parse crontab files and check each type of line for potential syntax errors.
+
+Basic usage:
+  chkcrontab crontab_file
+"""
+
+from __future__ import print_function
+
+__author__ = 'lyda@google.com (Kevin Lyda)'
+
+import sys
+import chkcrontab_lib as check
+
+from optparse import OptionParser
+
+def main(argv):
+  """main program."""
+  if len(argv) == 1:
+    print('ERROR: No crontab file was specified.')
+    sys.exit(1)
+
+  log = check.LogCounter()
+  (options, args) = parse_chkcrontab_options(argv)
+  for crontab in args[1:]:
+    print('Checking correctness of %s' % crontab)
+    return check.check_crontab(crontab, log, options.whitelisted_users)
+
+def parse_chkcrontab_options(argv):
+  """Parse the options for chkcrontab.
+
+  Args:
+    argv: The argument string supplied by the caller.
+
+  Returns:
+    options: A dictionary of options and their values.
+    args: Remaining arguments.
+  """
+  parser = OptionParser()
+  parser.add_option('-w', '--whitelist', dest='whitelisted_users', action='append',
+                    help='A user to ignore when warning of unrecognized users  This argument may be passed multiple times.')
+  return parser.parse_args(argv)
+
+if __name__ == '__main__':
+  sys.exit(main(sys.argv))
