@@ -10,6 +10,7 @@ Syntaxchecks for PHP, Python, Ruby, Yaml and Crontab files.
 
 ## Implemented checks
 
+- Bash
 - PHP
 - Python
 - Ruby
@@ -42,6 +43,7 @@ Syntaxchecks for PHP, Python, Ruby, Yaml and Crontab files.
 
 ```bash
 # find files for syntaxchecks
+regex_bash_files="^.*sh$"
 regex_php_files="^.*(php|php.skel|php.skel.*)$"
 regex_yaml_files="^.*(yaml|yml)$"
 regex_python_files="^.*py$"
