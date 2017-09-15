@@ -4,12 +4,12 @@ path="."
 last_commits=0
 strict=0
 # find files for syntaxchecks
-regex_bash_files="^.*sh$"
-regex_php_files="^.*(php|php.skel|php.skel.*)$"
-regex_yaml_files="^.*(yaml|yml)$"
-regex_python_files="^.*py$"
-regex_ruby_files="^.*(.rb|Vagrantfile)$"
-regex_crontab_files="^.*cron$"
+regex_bash_files="^.*\.sh$"
+regex_php_files="^.*\.(php|php.skel|php.skel.*)$"
+regex_yaml_files="^.*\.(yaml|yml)$"
+regex_python_files="^.*\.py$"
+regex_ruby_files="^.*\.(.rb|Vagrantfile)$"
+regex_crontab_files="^.*\.cron$"
 # exclude vendor and cache directories
 regex_exclude="^.*/(vendor|cache)/.*$"
 
