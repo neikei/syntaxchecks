@@ -12,6 +12,8 @@ regex_ruby_files="^.*(\.rb|Vagrantfile)$"
 regex_crontab_files="^.*\.cron$"
 # exclude vendor and cache directories
 regex_exclude="^.*/(vendor|cache)/.*$"
+# script path
+script_path="`dirname \"$0\"`"
 
 ### functions
 function usage() {
@@ -150,13 +152,13 @@ function check_crontab_files() {
 
     for file in $filelist
     do
-    ./bin/chkcrontab/chkcrontab $file > /dev/null 2>&1
+    $script_path/bin/chkcrontab/chkcrontab $file > /dev/null 2>&1
     if [ $? -eq 0 ]; then
         echo "No syntax errors detected in $file"
     else
         echo "Some syntax errors detected in $file"
         if [ $strict -eq 1 ]; then
-            ./bin/chkcrontab/chkcrontab $file
+            $script_path/bin/chkcrontab/chkcrontab $file
             exit 1; 
         fi
     fi
