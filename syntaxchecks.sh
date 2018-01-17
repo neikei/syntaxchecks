@@ -17,7 +17,7 @@ script_path="`dirname \"$0\"`"
 
 ### functions
 function usage() {
-    echo "Usage: $0 [-p <path>] [-c <last_commits>] [-a] [-s]" 1>&2; exit 1; 
+    echo "Usage: $0 [-p <path>] [-c <last_commits>] [-r <overwrite regex exclude>] [-a] [-s]" 1>&2; exit 1;
 }
 
 function system_check() {
@@ -49,7 +49,7 @@ function check_bash_files() {
         echo "Some syntax errors detected in $file"
         if [ $strict -eq 1 ]; then
             bash -n $file
-            exit 1; 
+            exit 1;
         fi
     fi
     done
@@ -71,7 +71,7 @@ function check_php_files() {
         echo "Some syntax errors detected in $file"
         if [ $strict -eq 1 ]; then
             php -l $file
-            exit 1; 
+            exit 1;
         fi
     fi
     done
@@ -93,7 +93,7 @@ function check_python_files() {
         echo "Some syntax errors detected in $file"
         if [ $strict -eq 1 ]; then
             python -m py_compile $file
-            exit 1; 
+            exit 1;
         fi
     fi
     done
@@ -115,7 +115,7 @@ function check_ruby_files() {
         echo "Some syntax errors detected in $file"
         if [ $strict -eq 1 ]; then
             ruby -c $file
-            exit 1; 
+            exit 1;
         fi
     fi
     done
@@ -137,7 +137,7 @@ function check_yaml_files() {
         echo "Some syntax errors detected in $file"
         if [ $strict -eq 1 ]; then
             ruby -e "require 'yaml';puts YAML.load_file(\"$file\")"
-            exit 1; 
+            exit 1;
         fi
     fi
     done
@@ -159,7 +159,7 @@ function check_crontab_files() {
         echo "Some syntax errors detected in $file"
         if [ $strict -eq 1 ]; then
             $script_path/bin/chkcrontab/chkcrontab $file
-            exit 1; 
+            exit 1;
         fi
     fi
     done
@@ -168,10 +168,11 @@ function check_crontab_files() {
 }
 
 ### main
-while getopts ':p:c:as' OPTION ; do
+while getopts ':p:c:r:as' OPTION ; do
   case "$OPTION" in
     p)   path=$OPTARG;;
     c)   last_commits=$OPTARG;;
+    r)   regex_exclude=$OPTARG;;
     a)   last_commits=0;;
     s)   strict=1;;
     *)   usage;;
