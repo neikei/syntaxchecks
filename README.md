@@ -45,12 +45,13 @@ sudo apt install git php-cli python ruby
 
 ## Parameter
 
-| Parameter | Description                       | Example           |
-|-----------|-----------------------------------|-------------------|
-| -p        | Path to the project               | -p "/tmp/project" |
-| -s        | Enable strict mode (Default: off) | -s                |
-| -a        | Check all files in path           | -a                |
-| -c        | Check files in last commits       | -c 1              |
+| Parameter | Description                       | Example             |
+|-----------|-----------------------------------|---------------------|
+| -p        | Path to the project               | -p "/tmp/project"   |
+| -s        | Enable strict mode (Default: off) | -s                  |
+| -a        | Check all files in path           | -a                  |
+| -c        | Check files in last commits       | -c 1                |
+| -r        | Overwrite exclude regex           | -r "^.*/vendor/.*$" |              |
 
 ## Usage
 
