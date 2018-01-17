@@ -9,6 +9,7 @@
     - [Parameter](#parameter)
     - [Usage](#usage)
         - [Manual execution](#manual-execution)
+        - [Makefile](#makefile)
         - [Jenkins](#jenkins)
         - [Bamboo](#bamboo)
         - [Bitbucket Pipelines](#bitbucket-pipelines)
@@ -64,6 +65,19 @@ sudo apt install git php-cli python ruby
 
 # Check all files in the last 5 commits of the project and stop at the first error
 ./syntaxchecks.sh -p "/tmp/project" -c 5 -s
+```
+
+### Makefile
+
+```bash
+.PHONY: syntaxcheck
+syntaxcheck:
+        @echo "==> Syntaxcheck started"
+        wget https://github.com/neikei/syntaxchecks/archive/master.zip
+        unzip master.zip && rm master.zip
+        syntaxchecks-master/syntaxchecks.sh -p "`pwd`" -a -s
+        rm -rf syntaxchecks-master
+        @echo -e "==> Syntaxcheck finished\n"
 ```
 
 ### Jenkins
