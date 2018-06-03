@@ -1,5 +1,7 @@
 # Syntaxchecks
 
+[![Build Status](https://travis-ci.org/neikei/syntaxchecks.svg?branch=master)](https://travis-ci.org/neikei/syntaxchecks)
+
 <!-- TOC -->
 
 - [Syntaxchecks](#syntaxchecks)
@@ -13,6 +15,7 @@
         - [Jenkins](#jenkins)
         - [Bamboo](#bamboo)
         - [Bitbucket Pipelines](#bitbucket-pipelines)
+        - [Travis CI](#travis-ci)
     - [Regular expressions](#regular-expressions)
     - [Third party software](#third-party-software)
 
@@ -119,6 +122,15 @@ pipelines:
           - unzip master.zip && rm master.zip
           - syntaxchecks-master/syntaxchecks.sh -p "`pwd`" -c 1 -s
           - rm -rf syntaxchecks-master
+```
+
+### Travis CI
+
+```bash
+script:
+  - wget https://github.com/neikei/syntaxchecks/archive/master.zip
+  - unzip master.zip && rm master.zip
+  - syntaxchecks-master/syntaxchecks.sh -p "`pwd`" -a -s
 ```
 
 ## Regular expressions
