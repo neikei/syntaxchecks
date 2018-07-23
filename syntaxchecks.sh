@@ -42,11 +42,18 @@ function check_bash_files() {
 
     for file in $filelist
     do
+
+    first_line=$(head -n 1 "$file")
+    if [[ $first_line =~ ^\#\! ]] && ! [[ $first_line =~ .+bin.+sh ]]; then
+        echo "WARNING: Skipped file, because shebang is missing in $file"
+        continue
+    fi
+
     bash -n "$file" > /dev/null 2>&1
     if [ $? -eq 0 ]; then
         echo "No syntax errors detected in $file"
     else
-        echo "Some syntax errors detected in $file"
+        echo "ERROR: Some syntax errors detected in $file"
         if [ $strict -eq 1 ]; then
             bash -n "$file"
             exit 1;
@@ -68,7 +75,7 @@ function check_php_files() {
     if [ $? -eq 0 ]; then
         echo "No syntax errors detected in $file"
     else
-        echo "Some syntax errors detected in $file"
+        echo "ERROR: Some syntax errors detected in $file"
         if [ $strict -eq 1 ]; then
             php -l "$file"
             exit 1;
@@ -90,7 +97,7 @@ function check_python_files() {
     if [ $? -eq 0 ]; then
         echo "No syntax errors detected in $file"
     else
-        echo "Some syntax errors detected in $file"
+        echo "ERROR: Some syntax errors detected in $file"
         if [ $strict -eq 1 ]; then
             python -m py_compile "$file"
             exit 1;
@@ -112,7 +119,7 @@ function check_ruby_files() {
     if [ $? -eq 0 ]; then
         echo "No syntax errors detected in $file"
     else
-        echo "Some syntax errors detected in $file"
+        echo "ERROR: Some syntax errors detected in $file"
         if [ $strict -eq 1 ]; then
             ruby -c "$file"
             exit 1;
@@ -134,7 +141,7 @@ function check_yaml_files() {
     if [ $? -eq 0 ]; then
         echo "No syntax errors detected in $file"
     else
-        echo "Some syntax errors detected in $file"
+        echo "ERROR: Some syntax errors detected in $file"
         if [ $strict -eq 1 ]; then
             ruby -e "require 'yaml';puts YAML.load_file(\"$file\")"
             exit 1;
@@ -156,7 +163,7 @@ function check_crontab_files() {
     if [ $? -eq 0 ]; then
         echo "No syntax errors detected in $file"
     else
-        echo "Some syntax errors detected in $file"
+        echo "ERROR: Some syntax errors detected in $file"
         if [ $strict -eq 1 ]; then
             "$script_path"/bin/chkcrontab/chkcrontab "$file"
             exit 1;
